@@ -340,3 +340,95 @@ where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno
 			having part_cnt >= 1
 		) as temp
     );
+    
+# 21. 적어도 한 개 이상의 red 부품을 공급하는 적어도 한 명 이상의 공급자들이 공급하는 
+#	적어도 한개 이상의 부품을 공급하는 공급자의 번호와 이름을 찾아라
+select *
+from s, p, spj
+where s.sno=spj.sno and p.pno = spj.pno;
+
+# 문제가 무슨 말인지 모르겠음.
+
+# 22. 공급자 s1의 status 값보다 더 낮은 status 를 갖는 공급자의 번호와 이름을 찾아라
+select * from s;
+
+select status from s where sno='s1';
+
+select sno, sname, status from s where status < (select status from s where sno='s1');
+
+# 23. 프로젝트의 city 목록에서 알파벳 순서에서 첫번째 도시의 프로젝트 번호와 이름을 찾아라
+select * from j order by city;
+
+select * from j order by city limit 1;
+
+# 24. 부품 p1의 프로젝트 공급 수량의 평균이 프로젝트 j1에 공급된 any 부품의 최대 수량보다 더 큰 프로젝트의 번호와 이름을 찾아라.
+#	부품 p1은 공급자 s1, s2, ..., sn 에 의하여 각프로젝트에 공급될 때 각 공급자의 공급 수량의 평균을 구한다.
+select *
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno;
+
+select j.jno, p.pno
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno and p.pno='p1';
+
+select j.jno, p.pno
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno and j.jno='j1';
+
+# 질문 이해 안됨
+
+
+# 25. 부품 p1을 어던 프로젝트에 공급하는 수량이 그 프로젝트를 위한 부품 p1의 평균 공급 수량
+#	(평균 공급 수량은 각 공급자가 공급하는 수량의 평균이다)보다 더 큰 공급자의 번호와 이름을 찾아라. 
+
+# 질문 이해 안됨
+
+# 26. London 에 있는 공급자에 의해 어떠한 red 부품도 공급받지 않는 프로젝트의 번호와 이름을 찾아라.
+select s.sno, s.city, p.color, j.jno
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno and s.city='London';
+
+select *
+from j
+where j.jno not in (
+	select j.jno
+	from s, p, j, spj
+	where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno and s.city='London'
+);
+
+# 27. 공급자 s1에 의해서만 부품을 공급받는 프로젝트의 번호와 이름을 찾아라.
+select s.sno, s.city, p.color, j.jno
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno and s.sno='s1';
+
+select j.jno, s.sno
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno
+order by j.jno;
+
+select j.jno, count(s.sno) as cnt
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno
+group by j.jno;
+
+select j.jno, count(s.sno) as cnt # sno 가 1개인 프로젝트 출력
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno
+group by j.jno
+having cnt = 1;
+
+
+# 28. London 에 있는 모든 프로젝트에 공급되는 부품의 번호와 이름을 찾아라
+
+# 29. 모든 프로젝트에 같은 부품들을 공급하는 공급자의 번호와 이름을 찾아라.
+
+# 30. 공급자 s1이 공급하는 모든 부품을 적어도 그 이상 공급받는 프로젝트의 번호와 이름을 찾아라.
+
+# 31. 적어도 한 공급자가 있는 city 이거나, 적어도 한 부품의 city 이거나, 
+#	적어도 한 프로젝트의 city 인 모든 city 이름을 찾아라.
+
+# 32. London 에 있는 공급자에 의해서 공급되거나 London 에 있는 프로젝트에 공급된 부품의 번호와 이름을 찾아라.
+
+# 33. 어떤 부품을 공급하지 않는 공급자 또는 어떤 고급자에 의해서도 공급되지 않는 부품의 공급자 번호, 부품 번호 쌍을 찾아라.
+
+# 34. 같은 종류의 부품들을 공급하는 고급자 쌍을 공급자 번호의 쌍으로 찾아라.
