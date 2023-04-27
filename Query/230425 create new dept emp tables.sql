@@ -1,6 +1,10 @@
 use warehouse;
+drop table if exists emp;
+drop table if exists dept;
+
 drop table if exists emp_old;
 drop table if exists dept_old;
+
 
 RENAME TABLE dept TO dept_old;
 RENAME TABLE emp TO emp_old;
