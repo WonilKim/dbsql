@@ -419,6 +419,15 @@ having cnt = 1;
 
 
 # 28. London 에 있는 모든 프로젝트에 공급되는 부품의 번호와 이름을 찾아라
+select *
+from p, j, spj
+where p.pno=spj.pno and j.jno = spj.jno
+	and j.city = 'London';
+    
+select p.pno, p.pname, j.city
+from p, j, spj
+where p.pno=spj.pno and j.jno = spj.jno
+	and j.city = 'London';
 
 # 29. 모든 프로젝트에 같은 부품들을 공급하는 공급자의 번호와 이름을 찾아라.
 

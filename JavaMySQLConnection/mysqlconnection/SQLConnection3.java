@@ -1,4 +1,4 @@
-package h2sqlconnecton;
+package mysqlconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,14 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Random;
 
-public class H2SQLConnection3 {
+public class SQLConnection3 {
 	
 	Connection con = null;
 	
 	private boolean connectDB() {
 		try {
-			String driver = "org.h2.Driver";
-			String url = "jdbc:h2:~/telephone";
+			String driver = "com.mysql.cj.jdbc.Driver";
+			String url = "jdbc:mysql://localhost:3306/telephone";
 			String username = "scott";
 			String password = "tiger";
 						
@@ -259,7 +259,7 @@ public class H2SQLConnection3 {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		H2SQLConnection3 db = new H2SQLConnection3();
+		SQLConnection3 db = new SQLConnection3();
 		if(db.connectDB()) {
 //			db.insertDept("d2", "temp2", 9500000);
 //			db.insertDeptStatement("d3", "temp3", 9500000);
