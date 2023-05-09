@@ -430,7 +430,29 @@ where p.pno=spj.pno and j.jno = spj.jno
 	and j.city = 'London';
 
 # 29. 모든 프로젝트에 같은 부품들을 공급하는 공급자의 번호와 이름을 찾아라.
+select j.jno, p.pno, s.sno 
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno
+order by j.jno, p.pno, s.sno;
 
+select j.jno, p.pno, count(s.sno) as cnt
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno
+group by j.jno, p.pno
+having cnt >= 2
+order by j.jno, p.pno;
+
+select j.jno, p.pno, s.sno 
+from s, p, j, spj
+where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno 
+	and j.jno in(
+	select j.jno
+	from s, p, j, spj
+	where s.sno=spj.sno and j.jno=spj.jno and p.pno = spj.pno
+	group by j.jno, p.pno
+	having cnt >= 2
+	)
+order by j.jno, p.pno, s.sno;
 # 30. 공급자 s1이 공급하는 모든 부품을 적어도 그 이상 공급받는 프로젝트의 번호와 이름을 찾아라.
 
 # 31. 적어도 한 공급자가 있는 city 이거나, 적어도 한 부품의 city 이거나, 

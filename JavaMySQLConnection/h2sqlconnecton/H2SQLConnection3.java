@@ -289,7 +289,7 @@ public class H2SQLConnection3 {
 //			db.createContactTable();
 //			db.createPhoneTable();
 			
-			db.insertContactStatement(1000000);
+			db.insertContactStatement(100);
 			
 			//
 			db.closeDB();
